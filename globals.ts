@@ -22,12 +22,6 @@ const global: Global = {};
 export function setConfig(config: KantTechConfig) {
 	global.config = config;
 }
-export function setDirUrl(dirUrl: string) {
-	const path = Path.parse(dirUrl);
-	global.dirUrl = path.dir.replace("file://", "") + "/";
-}
-export function getDirUrl() {
-	return global.dirUrl;
 export function getConfig(): KantTechConfig {
 	if (global.config) return global.config;
 	const projectName = prompt(`
