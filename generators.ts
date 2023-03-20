@@ -5,15 +5,21 @@ export function gitignore() {
 	generateFile(".gitignore", presets.gitignore);
 }
 export function denoJson() {
-	generateFile(
-		"deno.json",
-		JSON.stringify(presets.denoJson),
-		(url, content) => {
-			const json = JSON.parse(content);
-			if (!json.tasks.debug) json.tasks.debug = presets.denoJson.tasks.debug;
-			Deno.writeTextFileSync(url, content);
-		},
-	);
+	// Sollte es schon eine deno.jsonc geben, wird übersprungen.
+	// Sollte es aber noch keine geben, wird mit deno.json fortgefahren.
+	try {
+		Deno.readTextFileSync("deno.jsonc");
+	} catch (_) {
+		generateFile(
+			"deno.json",
+			JSON.stringify(presets.denoJson),
+			(url, content) => {
+				const json = JSON.parse(content);
+				if (!json.tasks.debug) json.tasks.debug = presets.denoJson.tasks.debug;
+				Deno.writeTextFileSync(url, content);
+			},
+		);
+	}
 }
 export function kantTechConfigJsonc() {
 	generateFile(
