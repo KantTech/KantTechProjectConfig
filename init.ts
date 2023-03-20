@@ -15,16 +15,18 @@ export function init(projectName: string): KantTechConfig {
 	Generators.settings();
 
 	readConfig();
+
+	return Global.getConfig();
 }
 
 function readConfig() {
 	const fileName = Deno.env.get("KANT_TECH_CONFIG");
 	if (!fileName) {
 		throw new Error(`
-			Die Konfigurationsdatei konnte nicht gefunden werden.
-			Bitte achte darauf, dass Du den Pfad zu der Konfiguration als Umgebungsvariable angibst.
-			Zum Beispiel:
-				KANT_TECH_CONFIG="/home/christian/KantTech/kanttech.config.jsonc" deno task start
+	Die Konfigurationsdatei konnte nicht gefunden werden.
+	Bitte achte darauf, dass Du den Pfad zu der Konfiguration als Umgebungsvariable angibst.
+	Zum Beispiel:
+		KANT_TECH_CONFIG="/home/christian/KantTech/kanttech.config.jsonc" deno task start
 			`);
 	}
 	const text = Deno.readTextFileSync(fileName);
