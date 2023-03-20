@@ -22,15 +22,20 @@ const global: Global = {};
 export function setConfig(config: KantTechConfig) {
 	global.config = config;
 }
-export function getConfig() {
-	return global.config;
-}
 export function setDirUrl(dirUrl: string) {
 	const path = Path.parse(dirUrl);
 	global.dirUrl = path.dir.replace("file://", "") + "/";
 }
 export function getDirUrl() {
 	return global.dirUrl;
+export function getConfig(): KantTechConfig {
+	if (global.config) return global.config;
+	const projectName = prompt(`
+	Das Projekt wurde nicht mit 'init(PROJEKTNAME);' initialisiert.
+	Bei jedem Start wird diese Abfrage kommen, sollte das Projekt nicht regelkonform initialisiert werden.
+	Wie heißt das Projekt?
+	`);
+	return init(projectName + "");
 }
 export function setProjectName(projectName: string) {
 	global.projectName = projectName;
