@@ -3,9 +3,11 @@ import * as Global from "./globals.ts";
 import { KantTechConfig } from "./globals.ts";
 import * as Generators from "./generators.ts";
 
-export function init(projectName: string, path: string) {
-	Global.setDirUrl(new URL(path).href + "/");
+export function init(projectName: string): KantTechConfig {
 	Global.setProjectName(projectName);
+
+	checkFirstInit();
+
 	Generators.gitignore();
 	Generators.denoJson();
 	Generators.kantTechConfigJsonc();
@@ -30,4 +32,30 @@ function readConfig() {
 	// Weil in JSONC auch einfach nur Werte (nicht in einem Objekt) stehen können,
 	// muss hier erst einmal zu `unknown` konvertiert werden, und dann zu KantTechConfig.
 	Global.setConfig(parsed as unknown as KantTechConfig);
+}
+
+function checkFirstInit() {
+	try {
+		Deno.readTextFileSync("deno.json");
+	} catch (_) {
+		try {
+			Deno.readTextFileSync("deno.jsonc");
+		} catch (_) {
+			let result: string | null = "";
+			while (result != "ja" && result != "nein") {
+				result = prompt(
+					`
+Neues Projekt "${Global.getProjectName(false)}" im Ordner folgenden Ordner
+	${Deno.cwd()}
+erstellen? (ja oder nein)`,
+					"nein",
+				);
+			}
+
+			if (result == "nein") {
+				console.log("Projektinitialisierung abgebrochen.");
+				Deno.exit(0);
+			}
+		}
+	}
 }
