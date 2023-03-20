@@ -8,7 +8,7 @@ export function init(projectName: string, path: string) {
 	Global.setProjectName(projectName);
 	Generators.gitignore();
 	Generators.denoJson();
-	Generators.kanttechConfigJsonc();
+	Generators.kantTechConfigJsonc();
 	Generators.runYml();
 	Generators.settings();
 

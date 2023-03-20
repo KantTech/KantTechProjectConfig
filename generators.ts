@@ -15,7 +15,7 @@ export function denoJson() {
 		},
 	);
 }
-export function kanttechConfigJsonc() {
+export function kantTechConfigJsonc() {
 	generateFile(
 		"kanttech.config.jsonc",
 		JSON.stringify(presets.kanttechConfigJsonc),

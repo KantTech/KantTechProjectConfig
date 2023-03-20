@@ -1,4 +1,2 @@
-import { getConfig, KantTechConfig } from "./globals.ts";
-import { init } from "./init.ts";
-
-export { getConfig, init, type KantTechConfig };
+export { getConfig, type KantTechConfig } from "./globals.ts";
+export { init } from "./init.ts";

@@ -1,13 +1,18 @@
+import * as Path from "https://deno.land/std@0.180.0/path/mod.ts";
+import * as Global from "./globals.ts";
+
 export default function generateFile(
-	url: string,
+	relativeUrl: string,
 	content: string,
 	existsCallback?: (url: string, text: string) => void,
 ) {
 	try {
-		const text = Deno.readTextFileSync(url);
-		if (existsCallback) existsCallback(url, text);
+		const text = Deno.readTextFileSync(relativeUrl);
+		if (existsCallback) existsCallback(relativeUrl, text);
 	} catch (_) {
-		Deno.createSync(url);
-		Deno.writeTextFileSync(url, content);
+		const path = Path.parse(Global.getDirUrl() + relativeUrl);
+		console.log(path.dir);
+		Deno.mkdirSync(path.dir, { recursive: true });
+		Deno.writeTextFileSync(relativeUrl, content);
 	}
 }

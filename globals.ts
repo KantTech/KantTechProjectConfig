@@ -1,3 +1,5 @@
+import * as Path from "https://deno.land/std@0.180.0/path/mod.ts";
+
 export interface KantTechConfig {
 	port: number;
 	neo4j: {
@@ -10,33 +12,36 @@ export interface KantTechConfig {
 		password: string;
 	};
 }
-
-let _config: KantTechConfig | undefined;
-let _dirUrl: string;
-let _projectName: string;
+interface Global {
+	config?: KantTechConfig;
+	dirUrl?: string;
+	projectName?: string;
+}
+const global: Global = {};
 
 export function setConfig(config: KantTechConfig) {
-	_config = config;
+	global.config = config;
 }
 export function getConfig() {
-	return _config;
+	return global.config;
 }
 export function setDirUrl(dirUrl: string) {
-	_dirUrl = dirUrl;
+	const path = Path.parse(dirUrl);
+	global.dirUrl = path.dir.replace("file://", "") + "/";
 }
 export function getDirUrl() {
-	return _dirUrl;
+	return global.dirUrl;
 }
 export function setProjectName(projectName: string) {
-	_projectName = projectName;
+	global.projectName = projectName;
 	console.log(projectName);
-	console.log(_projectName);
+	console.log(global.projectName);
 }
 export function getProjectName(bereinigt: boolean) {
 	if (bereinigt) {
-		return _projectName.toLowerCase()
+		return global.projectName?.toLowerCase()
 			.replaceAll(".", "-")
 			.replaceAll("\s", "_");
 	}
-	return _projectName;
+	return global.projectName;
 }
