@@ -34,8 +34,6 @@ export function getConfig(): KantTechConfig {
 }
 export function setProjectName(projectName: string) {
 	global.projectName = projectName;
-	console.log(projectName);
-	console.log(global.projectName);
 }
 export function getProjectName(bereinigt: boolean) {
 	if (bereinigt) {
