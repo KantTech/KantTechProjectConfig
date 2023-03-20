@@ -22,7 +22,7 @@ export function kantTechConfigJsonc() {
 	);
 }
 export function runYml() {
-	generateFile(".github/workflows/run.yml", presets.runYml);
+	generateFile(".github/workflows/run.yml", presets.runYml());
 }
 export function settings() {
 	generateFile(
