@@ -1,4 +1,6 @@
-import * as Path from "https://deno.land/std@0.180.0/path/mod.ts";
+import { init } from "./init.ts";
+
+const global: Global = {};
 
 export interface KantTechConfig {
 	port: number;
@@ -17,7 +19,6 @@ interface Global {
 	dirUrl?: string;
 	projectName?: string;
 }
-const global: Global = {};
 
 export function setConfig(config: KantTechConfig) {
 	global.config = config;
