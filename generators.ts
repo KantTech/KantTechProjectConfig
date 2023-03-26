@@ -15,7 +15,8 @@ export function denoJson() {
 			JSON.stringify(presets.denoJson),
 			(url, content) => {
 				const json = JSON.parse(content);
-				if (!json.tasks.debug) json.tasks.debug = presets.denoJson.tasks.debug;
+				if (json.tasks.debug) return;
+				json.tasks.debug = presets.denoJson.tasks.debug;
 				Deno.writeTextFileSync(url, content);
 			},
 		);
